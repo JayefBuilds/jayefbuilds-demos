@@ -147,7 +147,10 @@ def main():
     log("watching " + ", ".join(short(full(d)) for d in shown))
     try:
         while True:
-            one_pass(a.catalog, AGENT_DIRS, link_dirs, a.dry_run)
+            try:
+                one_pass(a.catalog, AGENT_DIRS, link_dirs, a.dry_run)
+            except OSError as e:  # for example a folder without permission: log it, keep watching
+                log(f"error: {e.strerror}: {short(e.filename or '?')}")
             if a.once or a.dry_run:
                 return 0
             time.sleep(a.interval)

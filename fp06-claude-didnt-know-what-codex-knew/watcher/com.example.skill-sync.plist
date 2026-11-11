@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.example.skill-sync</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <!-- EDIT: the full path to your copy of skill-sync.py -->
+    <string>/PATH/TO/skill-sync.py</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <!-- EDIT: launchd does not expand ~, so write your full home path -->
+  <string>/PATH/TO/HOME/Library/Logs/skill-sync.log</string>
+  <key>StandardErrorPath</key>
+  <string>/PATH/TO/HOME/Library/Logs/skill-sync.log</string>
+</dict>
+</plist>

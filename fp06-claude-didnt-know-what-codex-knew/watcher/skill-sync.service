@@ -1,0 +1,11 @@
+# Linux systemd user unit. Copy to ~/.config/systemd/user/skill-sync.service,
+# edit the path, then: systemctl --user enable --now skill-sync
+[Unit]
+Description=Move new AI skills into one catalog and link them back
+
+[Service]
+ExecStart=/usr/bin/python3 %h/bin/skill-sync.py
+Restart=always
+
+[Install]
+WantedBy=default.target

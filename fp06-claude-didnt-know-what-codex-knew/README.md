@@ -12,7 +12,7 @@ YouTube: _TBD at publish_
 
 ## Honest gap
 
-Claude Code needs the link step for every new skill. There is no watcher yet that does it on its own. The video says so, and Section 5 of the script is for the watcher.
+By hand, Claude Code needs the link step for every new skill. The watcher (below) now does that step on its own.
 
 ## Reproduce it
 
@@ -26,6 +26,45 @@ Needs Claude Code, Codex and Pi installed. The demo uses a clean home folder, so
 6. The new skill. The catalog already holds `commit-style`. To repeat the on-camera write, remove its folder and type it again (text in `home/.agents/skills/commit-style/SKILL.md`). Open three new sessions. Codex and Pi list it with no extra step. Link it for Claude: `ln -s ~/.agents/skills/commit-style ~/.claude/skills/commit-style`. Then ask each agent: "Use the commit-style skill. Write a commit message for: added a retry to the login request."
 
 Keep the top of each `SKILL.md` to `name` and `description` only, so every tool accepts it.
+
+## The watcher
+
+`watcher/skill-sync.py` keeps one skills catalog, `~/.agents/skills`.
+A new skill in `~/.claude/skills`, `~/.codex/skills` or `~/.pi/agent/skills` is moved into the catalog. A link is left at the old path.
+Every catalog skill gets a link in `~/.claude/skills`, so every tool can see it.
+It never deletes or overwrites anything. Python 3, standard library only. It polls every 2 seconds (no `fswatch`: polling is simpler).
+
+Only `~/.claude/skills` gets links by default. Codex and Pi already read `~/.agents/skills`, and a second link would show each skill twice. To link another folder, add `--link-dir DIR` (repeat it for more).
+
+Install:
+
+```sh
+mkdir -p ~/bin && cp watcher/skill-sync.py ~/bin/ && chmod +x ~/bin/skill-sync.py
+```
+
+Run:
+
+```sh
+skill-sync.py            # run until Ctrl+C
+skill-sync.py --once     # one pass, then exit
+skill-sync.py --dry-run  # show what would change, change nothing (one pass)
+```
+
+Run in the background on macOS:
+
+```sh
+cp watcher/com.example.skill-sync.plist ~/Library/LaunchAgents/
+# edit the file: set the two path placeholders (the script and the log) to full paths
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.example.skill-sync.plist
+```
+
+On Linux, `watcher/skill-sync.service` is a systemd user unit. The header comment says how to use it.
+
+Stop: `launchctl bootout gui/$(id -u)/com.example.skill-sync`, or Ctrl+C if it runs in a terminal.
+
+Uninstall: run the `bootout` line, then remove the plist and `~/bin/skill-sync.py`. The links it made stay. They are harmless. Nothing in the catalog changes.
+
+Conflict: if a skill has the same name in the catalog and as a real folder in a tool folder, the watcher logs `conflict <name>` once and leaves both alone. Compare the two, keep one, and remove the other by hand. Then the next pass links it.
 
 ## Notes
 

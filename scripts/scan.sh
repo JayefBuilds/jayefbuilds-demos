@@ -23,20 +23,16 @@ if ! python3 - "$OUT/report.json" <<'PY'
 import json, sys
 r = json.load(open(sys.argv[1]))
 bad = 0
-def walk(o, path=""):
-    global bad
-    if isinstance(o, dict):
-        for k, v in o.items():
-            if k in ("errors", "scan_errors") and v:
-                print(f"scan: scanner reported {k}"); bad += 1
-            if isinstance(v, (int, float)) and v and any(t in k.lower() for t in ("employer", "secret", "finding", "hit")) \
-               and not any(t in k.lower() for t in ("excluded", "info", "false", "pull")):
-                print(f"scan: scanner finding count {path}{k}={v}"); bad += 1
-            walk(v, f"{path}{k}.")
-    elif isinstance(o, list):
-        for i, v in enumerate(o):
-            walk(v, f"{path}{i}.")
-walk(r)
+if r.get("errors") or r.get("totals", {}).get("errors"):
+    print("scan: scanner reported errors"); bad += 1
+if r.get("secrets"):
+    print(f"scan: scanner reported {len(r['secrets'])} secret finding(s)"); bad += 1
+for row in r.get("table", []):
+    for k, v in row.get("counts", {}).items():
+        if v and not k.startswith("pull_only"):
+            print(f"scan: employer finding count {k}={v} in {row.get('repo')}"); bad += 1
+if not r.get("table"):
+    print("scan: report has no repo table (failing closed)"); bad += 1
 sys.exit(1 if bad else 0)
 PY
 then

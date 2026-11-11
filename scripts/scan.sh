@@ -55,10 +55,12 @@ declare -a RULES=(
 )
 cd "$ROOT" || exit 2
 git rev-parse --verify HEAD >/dev/null 2>&1 || { echo "scan: FAIL: no commit at HEAD (failing closed)"; exit 2; }
-# Files to check: tracked at HEAD, content read from HEAD (not the working copy).
+# Files to check: every commit on every branch (a push can carry old commits), then the working tree.
+REVS="$(git rev-list --all)"
 for rule in "${RULES[@]}"; do
   name="${rule%%|*}"; pat="${rule#*|}"
-  hits="$(git grep -n -I -E -e "$pat" HEAD -- . 2>/dev/null | sed -E 's/^HEAD://' | cut -d: -f1,2)"
+  # shellcheck disable=SC2086
+  hits="$(git grep -n -I -E -e "$pat" $REVS -- . 2>/dev/null | cut -d: -f1,2,3 | sed -E 's/^([0-9a-f]{7})[0-9a-f]*:/\1:/' | sort -u)"
   if [ -n "$hits" ]; then
     while IFS= read -r h; do echo "scan: FAIL: rule $name at $h"; done <<<"$hits"
     fail=1

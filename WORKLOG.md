@@ -6,6 +6,9 @@
 - Re-check the FP06 steps for Codex and Pi after the OpenAI cap lifts (2026-11-11 21:08 UTC).
 - Check whether Codex or Pi list a skill twice when the watcher leaves a link in `~/.codex/skills` or `~/.pi/agent/skills` (FP06 S5c and H1 takes show it).
 
+## 2026-11-11: Land FP06 neutral demo skill (ship jayefbuilds-21)
+- Landed the approved neutral demo preparation on private main. Keep MIT and public visibility for the later approved release.
+
 ## 2026-11-11: FP06 neutral demo skill
 - Renamed the demo-only `alex-create-coach` folder, frontmatter and heading to `create-coach`. Updated README commands. The filmed evidence stays unchanged.
 - The watcher already exists and its README section describes it. Keep the repo private and add MIT only after the final yes.

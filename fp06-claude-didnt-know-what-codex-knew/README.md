@@ -1,6 +1,6 @@
 # FP06: Claude Didn't Know What Codex Knew. I Fixed That.
 
-YouTube: _TBD at publish_
+YouTube: https://youtu.be/ZnfVsmw5Xqs
 
 ## What the viewer sees
 

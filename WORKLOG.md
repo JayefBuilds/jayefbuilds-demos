@@ -1,9 +1,11 @@
 # WORKLOG
 
 ## Next Up / Open To-Dos
-- Replace the YouTube placeholder in `fp06-claude-didnt-know-what-codex-knew/README.md` with the real link at publish.
 - Re-check the FP06 steps for Codex and Pi after the OpenAI cap lifts (2026-11-11 21:08 UTC).
 - Check whether Codex or Pi list a skill twice when the watcher leaves a link in `~/.codex/skills` or `~/.pi/agent/skills` (FP06 S5c and H1 takes show it).
+
+## 2026-11-16: FP06 YouTube link (ship jayefbuilds-22)
+- FP06 is public. The README now links https://youtu.be/ZnfVsmw5Xqs. The repo is public with MIT.
 
 ## 2026-11-16: MIT license for the FP06 publish (ship jayefbuilds-22)
 - Added the MIT LICENSE approved in the FP06 T7 package and removed LICENSE-TODO.md. The repo goes public with the FP06 publish (Admiral's go, 2026-11-16).

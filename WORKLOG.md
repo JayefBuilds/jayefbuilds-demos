@@ -1,10 +1,12 @@
 # WORKLOG
 
 ## Next Up / Open To-Dos
-- Make the repo public and add a LICENSE (MIT) at the FP06 publish, with the Admiral's go. Run both checks first.
 - Replace the YouTube placeholder in `fp06-claude-didnt-know-what-codex-knew/README.md` with the real link at publish.
 - Re-check the FP06 steps for Codex and Pi after the OpenAI cap lifts (2026-11-11 21:08 UTC).
 - Check whether Codex or Pi list a skill twice when the watcher leaves a link in `~/.codex/skills` or `~/.pi/agent/skills` (FP06 S5c and H1 takes show it).
+
+## 2026-11-16: MIT license for the FP06 publish (ship jayefbuilds-22)
+- Added the MIT LICENSE approved in the FP06 T7 package and removed LICENSE-TODO.md. The repo goes public with the FP06 publish (Admiral's go, 2026-11-16).
 
 ## 2026-11-11: Land FP06 neutral demo skill (ship jayefbuilds-21)
 - Landed the approved neutral demo preparation on private main. Keep MIT and public visibility for the later approved release.
